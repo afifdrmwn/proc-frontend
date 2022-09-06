@@ -6,9 +6,15 @@ import axios from 'axios';
 import { API_URL } from '../../utils/utils';
 import $ from 'jquery';
 import jwt from 'jwt-decode';
+import { useHistory, BrowserRouter, useNavigate } from 'react-router-dom';
+import Navbar from '../../component/Navbars';
 
 function List(props) {
+    const history = useNavigate();
+    const token = localStorage.getItem('token')
     const [projectList, setProjectList] = useState([])
+    const [user, setUser] = useState("")
+
     // const [data, setData] = useState([])
     // const [user, setUser] = useState([]);
 
@@ -30,6 +36,29 @@ function List(props) {
         $('#dataTable').DataTable();
     }, [projectList])
 
+
+
+    //GET FETCH DATA NEW TAMBAH
+    const fetchDataTest = async() => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await axios.post(API_URL + 'login', )
+        .then((response) => {  
+            setUser(response.data);
+            
+        })
+    }
+
+
+    useEffect(() => {
+        if(!token)
+        {
+            history('/dashboard');
+            
+        }
+        fetchDataTest();
+    },[]);
+
+    //END GET FETCH DATA NEW TAMBAH
     
     // const dataSet = [
     //     ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
@@ -97,7 +126,7 @@ function List(props) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`/api/projects/${id}`)
+                axios.delete(API_URL + `delete/data/${id}`)
                     .then(function (response) {
                         Swal.fire({
                             icon: 'success',
@@ -120,6 +149,9 @@ function List(props) {
     }
 
     return (
+        <>
+        <Navbar />
+
         <Layout>
             <div className="container">
                 <h2 className="text-center mt-5 mb-3">Laravel Project Manager</h2>
@@ -172,6 +204,7 @@ function List(props) {
                 </div>
             </div>
         </Layout>
+        </>
     );
 }
 

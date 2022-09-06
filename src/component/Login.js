@@ -1,5 +1,5 @@
 //import hook react
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
 //import hook useHitory from react router dom
 import { useHistory, BrowserRouter, useNavigate } from 'react-router-dom';
@@ -22,6 +22,8 @@ function Login() {
     //define history
     const history = useNavigate();
 
+      
+
     //function "loginHanlder"
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -34,18 +36,18 @@ function Login() {
         formData.append('password', password);
 
         //send data to server
-        await axios.post(API_URL + '/login', formData)
+        await axios.post(API_URL + 'login', formData)
         .then((response) => {
 
             //set token on localStorage
             localStorage.setItem('token', response.data.token);
 
             //redirect to dashboard
-            history('/list');
+            history('/dashboard');
             console.log(formData);
         })
         .catch((error) => {
-
+            console.log(error.response.data)
             //assign error to state "validation"
             setValidation(error.response.data);
         })
