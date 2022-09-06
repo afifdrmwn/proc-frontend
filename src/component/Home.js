@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Table, Container, Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import Navbars from './Navbars';
 import axios from 'axios';
+
 import {API_URL} from '../utils/utils';
 //import cors from '../utils/cors';
 
+
 // import { API_URL } from './utils/utils';
 
-function Modals() {
+function Modals() { 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -206,6 +208,7 @@ function MidContent() {
 
     //     })
     // }
+
     // componentDidMount() {
     //     axios
     //     .get(API_URL + "data")
@@ -218,6 +221,7 @@ function MidContent() {
     //         console.log("error", error);
     //     });
     // }
+
 
     return (
         <>
